@@ -1,5 +1,6 @@
 import nibabel as nib
 import numpy as np
+import os
 
 def dicom2np(path):
     """ 
@@ -7,7 +8,7 @@ def dicom2np(path):
     Returns img_data, the numpy array and ConstPixelSpacing, 
     a list of the spacing between datapoints in mm for each dimension
     """
-    pathDicom = os.path.dirname(path)
+    pathDicom = os.path.dirname(path) #return the directory of the file
 
     import dicom
     lstFilesDCM = []  # create an empty list
@@ -52,7 +53,7 @@ def nifti2np(pathNifti):
     img_data_shape = img_data.shape
     _extent = (0, img_data_shape[0] - 1, 0, img_data_shape[1] - 1, 0, img_data_shape[2] - 1)
     ConstPixelDims = [_extent[1]-_extent[0]+1, _extent[3]-_extent[2]+1, _extent[5]-_extent[4]+1]
-    affine = img.header.get_base_affine()
+    affine = img.header.get_base_affine() #relating voxel coordinates to world coordinates
     spacing = header['pixdim'][1:4]
     # Load spacing values
     ConstPixelSpacing = spacing[0], spacing[1], spacing[2]
@@ -75,6 +76,7 @@ def nrrd2np(pathNrrd):
     return(readdata, ConstPixelSpacing, ImagePositionPatient)
 
 def thresholdnp(array, lo, hi):
-    thresholded1 = np.multiply(array, (array>lo).astype(int))
-    thresholded2 = np.multiply(thresholded1, (array<hi).astype(int))
+    #array>lo returns true or false, .astype(int) cast the value into integer
+    thresholded1 = np.multiply(array, (array>lo).astype(int)) #find image data > lo
+    thresholded2 = np.multiply(thresholded1, (array<hi).astype(int)) #find image data<hi
     return thresholded2

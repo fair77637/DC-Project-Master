@@ -11,7 +11,7 @@ from IPython.display import Image
 import nibabel as nib
 
 def reject_outliers(data, m=2):
-    dx = np.abs(data[0] - np.median(data[0]))
+    dx = np.abs(data[0] - np.median(data[0])) #.abs absolute value
     dy = np.abs(data[1] - np.median(data[1]))
     dz = np.abs(data[2] - np.median(data[2]))
     mdevx = np.median(dx)
