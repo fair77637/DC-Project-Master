@@ -9,24 +9,31 @@ import numpy as np
 import matplotlib
 from IPython.display import Image
 import nibabel as nib
+from pylab import *
+
 
 def reject_outliers(data, m=2):
-    dx = np.abs(data[0] - np.median(data[0])) #.abs absolute value
+    #pixel array averaged wrt to median value
+    dx = np.abs(data[0] - np.median(data[0])) #.abs absolute value median value
     dy = np.abs(data[1] - np.median(data[1]))
     dz = np.abs(data[2] - np.median(data[2]))
+    #find median of the adjusted array
     mdevx = np.median(dx)
     mdevy = np.median(dy)
     mdevz = np.median(dz)
     # if else is preventing from dividing by 0. if the median is 0, all
     # the differences have to be 0 becaues dx, dy, dz don't contain
     # negative numbers
+    #normalize the adjusted array so that the median = 1
     sx = dx/mdevx if mdevx else 0. 
     sy = dy/mdevy if mdevy else 0.
     sz = dz/mdevz if mdevz else 0.
+    #get logical array where data points exceeding threshold m can be wiped off
     logicalx = sx<m
     logicaly = sy<m
     logicalz = sz<m
     e = data*logicalx*logicaly*logicalz
+    #get rid of zero input
     data_return = np.array(e[:,e[1]!=0])
     return data_return
 
@@ -60,7 +67,6 @@ def pyheatmap(ArrayDicom, slice_, axis):
     else:
         print 'axis number needs to be 1, 2 or 3'
     #using pylab
-    from pylab import *
     c = pcolor(rot)
     set_cmap('gray')
     colorbar()
