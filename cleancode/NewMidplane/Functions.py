@@ -15,7 +15,8 @@ def pca(X):
     [m,n] = X.shape
     U = np.zeros(n)
     S = np.zeros(n)
-    Sigma = np.transpose(X) * X * 1/m
+    T = np.transpose(X)
+    Sigma = np.matmul(T,X)* 1/m
     [U,S,V] = np.linalg.svd(Sigma, full_matrices=True)
     #   Note for 3D eigenvectors U, the third eigenvector U[:,3]is     #   perpendicular
     #   to Eigenvector1 and eigenvector2.
@@ -69,11 +70,77 @@ def ang(v1, v2):
     
     
 def sym_t(A1,B1,C1,a,b,c,d):
+    "" "Calculate the normal vector to the plane """
     t = (d - A1*a - B1*b - C1*c)/(a**2 + b**2 + c**2)
     return t
     
+def mirror(a,b,c,p,boneReshaped):
+    q  = np.zeros((3,1));
+    q[0],q[1],q[2] = a,b,c;
+    d = np.dot(p,q)
+    #     Preliminary Midplane split
+    crossShape = boneReshaped[:,:,10].shape
+    mask = np.zeros(boneReshaped.shape)
+    for i in range(boneReshaped.shape[2]):
+        maski = np.fromfunction(lambda x,y: x > ((d-i*c-y*b)/a), crossShape)
+#         mask2 = np.fromfunction(lambda x,y: x < ((d-i*c-y*b)/a+2), crossShape)
+#         maski = np.multiply(mask1, mask2)
+        mask[:,:,i] = maski
+        ##Left and Right skull divide
+    left_skull = np.multiply(boneReshaped, mask==0)
+    right_skull = np.multiply(boneReshaped, mask==1)
+    ##Coordinates of Left and Right skull pixels
+    X_left = np.where(left_skull>0)
+    X_right = np.where(right_skull>0)
+        ##Mirror the left pixels to the right about the plane
+    import Functions
+    t = Functions.sym_t(X_left[0],X_left[1],X_left[2],a,b,c,d)
+    mir_A1,mir_B1,mir_C1 = X_left[0] + 2*t*a,X_left[1] + 2*t*b,X_left[2] + 2*t*c
+    mir_A1 = mir_A1.astype(int)
+    mir_B1 = mir_B1.astype(int)
+    mir_C1 = mir_C1.astype(int)
+    mir_A1 = np.array(mir_A1)
+    mir_B1 = np.array(mir_B1)
+    mir_C1 = np.array(mir_C1)
+
+    Right_array = np.matrix.transpose(np.row_stack((X_right[0],X_right[1],X_right[2])))
+    mirror_array = np.matrix.transpose(np.row_stack((mir_A1,mir_B1,mir_C1)))
+    return Right_array,mirror_array
     
+def cul_difference(Right_array,mirror_array,sample_size):
+    from scipy.spatial import KDTree
+    """Searching for the nearest neighbor for randomly selected points, and sum up the differences"""
+    difference = 0
+    sel = np.random.randint(0, len(Right_array)-1 , (1,sample_size))
+    Selected_array = Right_array[sel,:][0]
+    for i in range(0,len(Selected_array)):
+        point = Selected_array[i]
+        tree = KDTree(mirror_array, leafsize=mirror_array.shape[0]+1)
+        distances, ndx = tree.query([point], k=1)
+        Sq_distance = distances**2
+        difference += Sq_distance
+    return difference
+
+def Close_Neighboring_pairs(Right_array,mirror_array,r):
+    from scipy.spatial import cKDTree
+    ## r is the radius for close-neighboring search
+    tree1 = cKDTree(mirror_array, leafsize=mirror_array.shape[0]+1)
+    tree2 = cKDTree(Right_array, leafsize=Right_array.shape[0]+1)
+    Num_pairs = cKDTree.count_neighbors(tree2, tree1, r, p=2.)
+    ###Note the value generally used is 3.
+    return Num_pairs
+
+
+
+def unit_vector(k):
+    import numpy as np
+    k_unit = k/np.sqrt(k[0]**2+ k[1]**2 + k[2]**2)
+    return k_unit
     
-    
-    
+def rotate_vector(v,k,theta):
+    """v is the original vecotr, k is the rotation axis, theta is the rotation angle in degrees"""
+    """Note theta must be a floating number eg 30.0"""
+    rad = theta/180*np.pi
+    v_rot = np.cos(rad)*v + (1-np.cos(rad))*np.dot(v,k)*k + np.sin(rad)*(np.cross(v,k))
+    return v_rot
     
