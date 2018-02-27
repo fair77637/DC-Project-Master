@@ -79,7 +79,7 @@ def mirror(a,b,c,p,boneReshaped):
     q[0],q[1],q[2] = a,b,c;
     d = np.dot(p,q)
     #     Preliminary Midplane split
-    crossShape = boneReshaped[:,:,10].shape
+    crossShape = boneReshaped[:,:,0].shape
     mask = np.zeros(boneReshaped.shape)
     for i in range(boneReshaped.shape[2]):
         maski = np.fromfunction(lambda x,y: x > ((d-i*c-y*b)/a), crossShape)
