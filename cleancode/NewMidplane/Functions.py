@@ -139,8 +139,8 @@ def unit_vector(k):
     
 def rotate_vector(v,k,theta):
     """v is the original vecotr, k is the rotation axis, theta is the rotation angle in degrees"""
-    """Note theta must be a floating number eg 30.0"""
-    rad = theta/180*np.pi
+    """Note theta must be a floating number eg 30.0; 2D vector rotation"""
+    rad = theta/180.0*np.pi
     v_rot = np.cos(rad)*v + (1-np.cos(rad))*np.dot(v,k)*k + np.sin(rad)*(np.cross(v,k))
     return v_rot
     
