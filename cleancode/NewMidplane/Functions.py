@@ -143,4 +143,64 @@ def rotate_vector(v,k,theta):
     rad = theta/180.0*np.pi
     v_rot = np.cos(rad)*v + (1-np.cos(rad))*np.dot(v,k)*k + np.sin(rad)*(np.cross(v,k))
     return v_rot
-    
+
+def Calibration_angle(a,b,c,d):
+    """Input midplane parameters a,b,c,d and calculate the orientation angle and skew angle"""
+    """Return n,(the array of a,b,c),Skew angle and Orientation angle"""
+    """Note the A_S and A_O output in degrees"""
+    a,b,c,d = a.astype(float),b.astype(float),c.astype(float),d.astype(float)
+    # midplane normal vector regulate the direction
+    if a<0:
+        a,b,c,d = a*-1,b*-1,c*-1,d*-1
+    n = np.array((a,b,c))
+
+    #define rotation axis in plane, in z direction correlates to skew angle
+    from sympy import solve
+    import Functions
+    import sympy
+    x = sympy.symbols('x')
+    x1 = solve(a*x + b*100 + c*0 - d, x)
+    x2 = solve(a*x + b*100 + c*100 - d, x)
+    k = np.array((x1[0]-x2[0],0,-100)).astype(float)
+    # k = k/np.sqrt((k[0]**2 + k[1]**2 + k[2]**2))
+    vk_unit = Functions.unit_vector(k)
+    vk_unit
+
+    ## Define rotation axis in y direction, correlating to the orientation angle
+    x = sympy.symbols('x')
+    x3 = solve(a*x + b*0.0 + c*100.0- d, x)
+    x4 = solve(a*x + b*100.0 + c*100.0 - d, x)
+
+    k2 = np.array((x3[0]-x4[0],-100.0,0.0)).astype(float)
+    vk2_unit = Functions.unit_vector(k2)
+    # the new_vk corresponds to the reshaped version of array, as displayed in ITK
+    # new_vk = Functions.unit_vector(vk_unit*ConstPixelSpacing)
+    vk2_unit
+
+    #the orientation angle
+    yaxis = np.array((0,1,0))
+    angle_ori = Functions.ang(vk2_unit,yaxis)
+    zaxis = np.array((0,0,1))
+    # angle_skew = Functions.ang(new_vk,zaxis)
+    angle_skew = Functions.ang(vk_unit,zaxis)
+
+    # Convert to degrees
+    # The skew angle 
+    A_S = 180.0 - angle_skew/np.pi*180.0
+    # The orientation angle
+    A_O = 180.0 - angle_ori/np.pi*180.0
+
+    if vk2_unit[0]*vk2_unit[1] < 0.0:
+        A_O = -1*A_O
+
+    if vk_unit[0]*vk_unit[2] < 0.0:
+        A_S = -1*A_S
+    return n,A_O,A_S
+
+def Reoriente(Loc_vector,axis,axis2,A_O,A_S,ConstPixelSpacing):
+    import Functions
+    """Calculate the reoriented location vector based on midplane calibration"""
+    RLoc = Functions.rotate_vector(Loc_vector,axis,-A_O)
+    RLoc = Functions.rotate_vector(RLoc,axis2,A_S)
+    RLoc = Functions.unit_vector(np.divide(RLoc,ConstPixelSpacing))
+    return RLoc
