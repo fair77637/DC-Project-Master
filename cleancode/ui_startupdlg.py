@@ -1,0 +1,145 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file '/Users/Sinead/DC-project/pyqt/chap08-copy/startupdlg.ui'
+#
+# Created by: PyQt4 UI code generator 4.11.4
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
+class Ui_StartupDlg(object):
+    def setupUi(self, StartupDlg):
+        StartupDlg.setObjectName(_fromUtf8("StartupDlg"))
+        StartupDlg.resize(375, 354)
+        StartupDlg.setMinimumSize(QtCore.QSize(375, 354))
+        StartupDlg.setStyleSheet(_fromUtf8(""))
+        self.gridlayout = QtGui.QGridLayout(StartupDlg)
+        self.gridlayout.setObjectName(_fromUtf8("gridlayout"))
+        self.pushButtonGo = QtGui.QPushButton(StartupDlg)
+        self.pushButtonGo.setEnabled(False)
+        self.pushButtonGo.setObjectName(_fromUtf8("pushButtonGo"))
+        self.gridlayout.addWidget(self.pushButtonGo, 4, 1, 1, 1)
+        self.verticalLayout_3 = QtGui.QVBoxLayout()
+        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
+        self.checkBoxSymmetryAnalysis = QtGui.QCheckBox(StartupDlg)
+        self.checkBoxSymmetryAnalysis.setEnabled(True)
+        self.checkBoxSymmetryAnalysis.setChecked(True)
+        self.checkBoxSymmetryAnalysis.setObjectName(_fromUtf8("checkBoxSymmetryAnalysis"))
+        self.verticalLayout_3.addWidget(self.checkBoxSymmetryAnalysis)
+        self.label = QtGui.QLabel(StartupDlg)
+        self.label.setWordWrap(True)
+        self.label.setIndent(18)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.verticalLayout_3.addWidget(self.label)
+        self.checkBoxSkullMidplaneMask = QtGui.QCheckBox(StartupDlg)
+        self.checkBoxSkullMidplaneMask.setEnabled(True)
+        self.checkBoxSkullMidplaneMask.setMinimumSize(QtCore.QSize(145, 18))
+        self.checkBoxSkullMidplaneMask.setChecked(True)
+        self.checkBoxSkullMidplaneMask.setObjectName(_fromUtf8("checkBoxSkullMidplaneMask"))
+        self.verticalLayout_3.addWidget(self.checkBoxSkullMidplaneMask)
+        self.label_2 = QtGui.QLabel(StartupDlg)
+        self.label_2.setWordWrap(True)
+        self.label_2.setIndent(18)
+        self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.verticalLayout_3.addWidget(self.label_2)
+        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem)
+        self.gridlayout.addLayout(self.verticalLayout_3, 1, 0, 1, 1)
+        self.TitleSelectOptions = QtGui.QLabel(StartupDlg)
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Helvetica"))
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setWeight(50)
+        self.TitleSelectOptions.setFont(font)
+        self.TitleSelectOptions.setObjectName(_fromUtf8("TitleSelectOptions"))
+        self.gridlayout.addWidget(self.TitleSelectOptions, 0, 0, 1, 1)
+        self.verticalLayout_2 = QtGui.QVBoxLayout()
+        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.checkBoxBrainMask = QtGui.QCheckBox(StartupDlg)
+        self.checkBoxBrainMask.setEnabled(True)
+        self.checkBoxBrainMask.setChecked(True)
+        self.checkBoxBrainMask.setObjectName(_fromUtf8("checkBoxBrainMask"))
+        self.verticalLayout_2.addWidget(self.checkBoxBrainMask)
+        self.label_5 = QtGui.QLabel(StartupDlg)
+        self.label_5.setWordWrap(True)
+        self.label_5.setIndent(18)
+        self.label_5.setObjectName(_fromUtf8("label_5"))
+        self.verticalLayout_2.addWidget(self.label_5)
+        self.checkBoxHaematomaMask = QtGui.QCheckBox(StartupDlg)
+        self.checkBoxHaematomaMask.setEnabled(True)
+        self.checkBoxHaematomaMask.setChecked(True)
+        self.checkBoxHaematomaMask.setObjectName(_fromUtf8("checkBoxHaematomaMask"))
+        self.verticalLayout_2.addWidget(self.checkBoxHaematomaMask)
+        self.label_4 = QtGui.QLabel(StartupDlg)
+        self.label_4.setWordWrap(True)
+        self.label_4.setIndent(18)
+        self.label_4.setObjectName(_fromUtf8("label_4"))
+        self.verticalLayout_2.addWidget(self.label_4)
+        self.checkBoxVentricleMask = QtGui.QCheckBox(StartupDlg)
+        self.checkBoxVentricleMask.setEnabled(True)
+        self.checkBoxVentricleMask.setChecked(True)
+        self.checkBoxVentricleMask.setObjectName(_fromUtf8("checkBoxVentricleMask"))
+        self.verticalLayout_2.addWidget(self.checkBoxVentricleMask)
+        self.label_3 = QtGui.QLabel(StartupDlg)
+        self.label_3.setWordWrap(True)
+        self.label_3.setIndent(18)
+        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.verticalLayout_2.addWidget(self.label_3)
+        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem1)
+        self.gridlayout.addLayout(self.verticalLayout_2, 1, 1, 1, 1)
+        self.verticalLayout = QtGui.QVBoxLayout()
+        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
+        self.progressBar = QtGui.QProgressBar(StartupDlg)
+        self.progressBar.setEnabled(True)
+        self.progressBar.setProperty("value", 0)
+        self.progressBar.setObjectName(_fromUtf8("progressBar"))
+        self.verticalLayout.addWidget(self.progressBar)
+        self.progressTextBox = QtGui.QTextBrowser(StartupDlg)
+        self.progressTextBox.setMinimumSize(QtCore.QSize(0, 0))
+        self.progressTextBox.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.progressTextBox.setObjectName(_fromUtf8("progressTextBox"))
+        self.verticalLayout.addWidget(self.progressTextBox)
+        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem2)
+        self.gridlayout.addLayout(self.verticalLayout, 3, 0, 1, 2)
+        self.pushButtonSelectScan = QtGui.QPushButton(StartupDlg)
+        self.pushButtonSelectScan.setObjectName(_fromUtf8("pushButtonSelectScan"))
+        self.gridlayout.addWidget(self.pushButtonSelectScan, 4, 0, 1, 1)
+
+        self.retranslateUi(StartupDlg)
+        QtCore.QMetaObject.connectSlotsByName(StartupDlg)
+
+    def retranslateUi(self, StartupDlg):
+        StartupDlg.setWindowTitle(_translate("StartupDlg", "Startup Box", None))
+        StartupDlg.setToolTip(_translate("StartupDlg", "<html><head/><body><p><br/></p></body></html>", None))
+        self.pushButtonGo.setText(_translate("StartupDlg", "Go", None))
+        self.checkBoxSymmetryAnalysis.setText(_translate("StartupDlg", "Symmetry Analysis", None))
+        self.label.setText(_translate("StartupDlg", "<html><head/><body><p><font color=\"gray\">Symmetry analysis of parenchyma, haematoma and ventricles about the skull midplane</font></p></body></html>", None))
+        self.checkBoxSkullMidplaneMask.setText(_translate("StartupDlg", "Skull Midplane Mask", None))
+        self.label_2.setText(_translate("StartupDlg", "<html><head/><body><p><font color=\"gray\">Create a mask of the midplane</font></p></body></html>", None))
+        self.TitleSelectOptions.setText(_translate("StartupDlg", "Select Actions for Analysis", None))
+        self.checkBoxBrainMask.setText(_translate("StartupDlg", "Brain Mask", None))
+        self.label_5.setText(_translate("StartupDlg", "<html><head/><body><p><font color=\"gray\">Create a mask of the parenchyma</font></p></body></html>", None))
+        self.checkBoxHaematomaMask.setText(_translate("StartupDlg", "Haematoma Mask", None))
+        self.label_4.setText(_translate("StartupDlg", "<html><head/><body><p><font color=\"gray\">Create a mask of  haematoma regions</font></p></body></html>", None))
+        self.checkBoxVentricleMask.setText(_translate("StartupDlg", "Ventricle Mask", None))
+        self.label_3.setText(_translate("StartupDlg", "<html><head/><body><p><font color=\"gray\">Create a mask of the ventricles</font></p></body></html>", None))
+        self.pushButtonSelectScan.setText(_translate("StartupDlg", "Select Scan", None))
+
